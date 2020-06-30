@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29509.3
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NFSUOnline", "NFSUOnline.csproj", "{A2328704-C31B-4782-BE67-76DFB8E3A19B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A2328704-C31B-4782-BE67-76DFB8E3A19B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A2328704-C31B-4782-BE67-76DFB8E3A19B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A2328704-C31B-4782-BE67-76DFB8E3A19B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A2328704-C31B-4782-BE67-76DFB8E3A19B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {4A3F72A8-D4B2-4F2D-98AE-44552A5644E7}
+	EndGlobalSection
+EndGlobal
