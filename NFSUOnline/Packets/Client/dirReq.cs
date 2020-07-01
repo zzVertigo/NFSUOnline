@@ -19,26 +19,29 @@ namespace NFSUOnline.Packets.Client
         private string CLST { get; set; }
         private string NETV { get; set; }
 
-        public dirReq(Player player, Reader reader) : base(player, reader)
+        public dirReq(Device device, Reader reader) : base(device, reader)
         {
 
         }
 
         public override void decode()
         {
-            this.PROD = reader.readValue("PROD");
-            this.VERS = reader.readValue("VERS");
-            this.SLUS = reader.readValue("SLUS");
-            this.FROM = reader.readValue("FROM");
-            this.LANG = reader.readValue("LANG");
-            this.REGN = reader.readValue("REGN");
-            this.CLST = reader.readValue("CLST");
-            this.NETV = reader.readValue("NETV");
+            this.PROD = reader.readValue1("PROD");
+            this.VERS = reader.readValue1("VERS");
+            this.SLUS = reader.readValue1("SLUS");
+            this.FROM = reader.readValue1("FROM");
+            this.LANG = reader.readValue1("LANG");
+            this.REGN = reader.readValue1("REGN");
+            this.CLST = reader.readValue1("CLST");
+            this.NETV = reader.readValue1("NETV");
         }
 
         public override void process()
         {
-            Resources.server.sendPacket(this.player, new dirRep(this.player));
+            if (this.PROD == "nfs-pc-2003" && this.VERS == "\"pc/1.4-Jan 15 2004\"" && this.NETV == "5")
+                Resources.server.sendPacket(this.device, new dirRep(this.device));
+            else
+                Console.WriteLine("Odd client joining lets just disconnect...");
         }
     }
 }

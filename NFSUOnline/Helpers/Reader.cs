@@ -14,12 +14,29 @@ namespace NFSUOnline.Helpers
             this.buffer = buffer;
         }
 
-        public string readValue(string value)
+        public string readValue1(string value)
         {
             string bufferStr = Encoding.UTF8.GetString(buffer);
 
             int valueIdx = bufferStr.IndexOf(value, StringComparison.Ordinal);
             int endIdx = bufferStr.IndexOf('\x0A', valueIdx);
+
+            int stringLen = endIdx - valueIdx;
+
+            string valueStr = bufferStr.Substring(valueIdx, stringLen);
+
+            string[] splitValueStr = valueStr.Split('=');
+
+            return splitValueStr[1];
+        }
+
+        // Fuck you EA! You absolute fucking retards..
+        public string readValue2(string value)
+        {
+            string bufferStr = Encoding.UTF8.GetString(buffer);
+
+            int valueIdx = bufferStr.IndexOf(value, StringComparison.Ordinal);
+            int endIdx = bufferStr.IndexOf('\x20', valueIdx);
 
             int stringLen = endIdx - valueIdx;
 

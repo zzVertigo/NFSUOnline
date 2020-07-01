@@ -48,49 +48,57 @@ namespace NFSUOnline.Networking
             Socket listener = (Socket) ar.AsyncState;
             Socket handler = listener.EndAccept(ar);
 
-            Player client = new Player();
+            Device client = new Device();
             client.workSocket = handler;
 
-            handler.BeginReceive(client.buffer, 0, Player.bufferSize, 0, readCallback, client);
+            handler.BeginReceive(client.buffer, 0, Device.bufferSize, 0, readCallback, client);
         }
 
         private static void readCallback(IAsyncResult ar)
         {
-            Player client = (Player) ar.AsyncState;
-
+            Device client = (Device) ar.AsyncState;
             Socket handler = client.workSocket;
 
-            int bytesRead = handler.EndReceive(ar);
+            SocketError errorCode;
 
-            if (bytesRead > 0)
+            int bytesRead = handler.EndReceive(ar, out errorCode);
+
+            if (bytesRead > 0 && errorCode == SocketError.Success)
             {
                 byte[] tempBuffer = new byte[bytesRead];
 
                 Array.Copy(client.buffer, tempBuffer, tempBuffer.Length);
 
                 client.process(tempBuffer);
-
-                handler.BeginReceive(client.buffer, 0, Player.bufferSize, 0, readCallback, client);
             }
+            else
+            {
+                // disconnected but ignore :D
+                return;
+            }
+
+            if (handler.Connected)
+                handler.BeginReceive(client.buffer, 0, Device.bufferSize, 0, readCallback, client);
         }
 
-        public void sendPacket(Player player, Packet packet)
+        public void sendPacket(Device device, Packet packet)
         {
             packet.encode();
             packet.process();
 
             byte[] byteData = packet.data.ToArray();
 
-            player.workSocket.BeginSend(byteData, 0, byteData.Length, 0, sendCallback, player);
+            Console.WriteLine("Data: " + BitConverter.ToString(byteData).Replace("-", ""));
+
+            if (device.workSocket.Connected)
+                device.workSocket.BeginSend(byteData, 0, byteData.Length, 0, sendCallback, device);
         }
 
         private static void sendCallback(IAsyncResult ar)
         {
-            Player player = (Player) ar.AsyncState;
+            Device device = (Device) ar.AsyncState;
 
-            int bytesSent = player.workSocket.EndSend(ar);
-
-            Console.WriteLine("Sent " + bytesSent + " bytes!");
+            device?.workSocket.EndSend(ar);
         }
     }
 }

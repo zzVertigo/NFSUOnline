@@ -19,6 +19,14 @@ namespace NFSUOnline.Packets
         private static void LoadPackets()
         {
             Packets.Add("@dir", typeof(dirReq));
+            Packets.Add("addr", typeof(addrReq));
+            Packets.Add("skey", typeof(skeyReq));
+            Packets.Add("acct", typeof(acctReq));
+            Packets.Add("auth", typeof(authReq));
+            Packets.Add("cper", typeof(cperReq));
+            Packets.Add("pers", typeof(persReq));
+            Packets.Add("sele", typeof(seleReq));
+            //Packets.Add("news", typeof(newsReq)); // broken?
         }
     }
 }
